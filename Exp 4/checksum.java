@@ -50,6 +50,13 @@ public class checksum {
         ArrayList<Integer> newsegment1 = new ArrayList<>(); 
         ArrayList<Integer> newsegment2 = new ArrayList<>(); 
 
+        System.out.print("Entered data is:  ");
+        for (i = 0 ; i < 32; i++){
+            System.out.print(data[i]);
+        }
+        System.out.println("\nNumber of blocks:  " + numberofblocks);
+        System.out.println("Bits in a block:  "+ blocksize);
+        
         for ( i = 0; i < blocksize - 1; i++) {
             buffer.add(0);
         }
@@ -91,7 +98,7 @@ public class checksum {
                     buffer = new ArrayList <> (buffer);
                     // System.out.println(remainder1);
                     
-                    if (ptr == 3){
+                    if (ptr == ((segment.length) - 1)){
                         buffer.clear();
                         buffer.add(1);
                         for ( i = 0; i < blocksize - 1; i++){
@@ -144,6 +151,6 @@ public class checksum {
             ptr++;    
         }
         
-        System.out.println("\n\nCodeword: " + code.toString().replaceAll("[\\[\\],]",""));
+        System.out.println("\n\nCodeword: " + code.toString().replaceAll("[\\[\\],]","")+"\n");
     }
 }

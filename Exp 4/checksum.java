@@ -154,3 +154,20 @@ public class checksum {
         System.out.println("\n\nCodeword: " + code.toString().replaceAll("[\\[\\],]","")+"\n");
     }
 }
+
+/*
+ Example:-
+ 
+Entered data is:  10110011101010110101101011010101
+Number of blocks:  4
+Bits in a block:  8
+
+Segment[1]      10110011
+Segment[2]      10101011
+Segment[3]      01011010
+Segment[4]      11010101
+Segment[5]      01010110
+
+Codeword: 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0
+
+ */

@@ -44,11 +44,11 @@ public class checksum {
         int[] data = {1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1}; 
         ArrayList<Integer>[] segment = new ArrayList[numberofblocks];
         ArrayList<Integer> remainder1 = new ArrayList<>(); 
-        ArrayList<Integer> code = new ArrayList<>(); 
         ArrayList<Integer> remainder2 = new ArrayList<>(); 
-        ArrayList<Integer> buffer = new ArrayList<>(); 
         ArrayList<Integer> newsegment1 = new ArrayList<>(); 
         ArrayList<Integer> newsegment2 = new ArrayList<>(); 
+        ArrayList<Integer> buffer = new ArrayList<>(); 
+        ArrayList<Integer> code = new ArrayList<>(); 
 
         System.out.print("Entered data is:  ");
         for (i = 0 ; i < 32; i++){
@@ -157,7 +157,7 @@ public class checksum {
 
 /*
  Example:-
- 
+
 Entered data is:  10110011101010110101101011010101
 Number of blocks:  4
 Bits in a block:  8

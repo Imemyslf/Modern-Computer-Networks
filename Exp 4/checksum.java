@@ -2,9 +2,15 @@ import java.util.*;
 
 public class checksum {
     
+    //Initialzing carray as global variable to work around the main function and remain function effectively.
     public int carry = 0;
+
+    // remain function 
     public ArrayList<Integer> remain(ArrayList<Integer> newsegment1, ArrayList<Integer> newsegment2, ArrayList<Integer> remainder, int blocksize) {
+        
+        //Clearing remainder ones again just to be safe :).
         remainder.clear();
+        
         for (int j = 0; j < blocksize; j++) {
             if (newsegment1.get(j) == 0 && newsegment2.get(j) == 0 && carry == 0) {
                 remainder.add(0);
@@ -33,7 +39,6 @@ public class checksum {
             }
         }
         Collections.reverse(remainder);
-        // System.out.println("Remainder insider the function: " + remainder);
         return remainder;
     }
     @SuppressWarnings("unchecked")
@@ -43,13 +48,14 @@ public class checksum {
         int ptr = 0,numberofblocks = 4,blocksize = 8,flag = 1,i,j,bs=0;
         int[] data = {1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1}; 
         ArrayList<Integer>[] segment = new ArrayList[numberofblocks];
-        ArrayList<Integer> remainder1 = new ArrayList<>(); 
-        ArrayList<Integer> remainder2 = new ArrayList<>(); 
-        ArrayList<Integer> newsegment1 = new ArrayList<>(); 
-        ArrayList<Integer> newsegment2 = new ArrayList<>(); 
-        ArrayList<Integer> buffer = new ArrayList<>(); 
-        ArrayList<Integer> code = new ArrayList<>(); 
+        ArrayList<Integer> remainder1 = new ArrayList<>();  //To keep the main remainder for calculations.
+        ArrayList<Integer> remainder2 = new ArrayList<>(); // Temporary remainder for calculations.
+        ArrayList<Integer> newsegment1 = new ArrayList<>(); // Toggle arounds segments.
+        ArrayList<Integer> newsegment2 = new ArrayList<>(); // Toggle arounds segments.
+        ArrayList<Integer> buffer = new ArrayList<>();  // buffer array storing 0 0 0 0 0 0 0 0 1 to add to remainder if carry == 1 at the end.
+        ArrayList<Integer> code = new ArrayList<>(); // Storing the actual codeword.
 
+        //Displaying the data before ading the codeword
         System.out.print("Entered data is:  ");
         for (i = 0 ; i < 32; i++){
             System.out.print(data[i]);
@@ -57,15 +63,18 @@ public class checksum {
         System.out.println("\nNumber of blocks:  " + numberofblocks);
         System.out.println("Bits in a block:  "+ blocksize);
         
+        // initializing buffer array.
+        buffer.add(1);
         for ( i = 0; i < blocksize - 1; i++) {
             buffer.add(0);
         }
-        buffer.add(1);
         
+        //initializing segment array into 4 sub-arrays of segment.
         for ( i = 0; i < numberofblocks; i++) {
             segment[i] = new ArrayList<Integer>();
         }
 
+        //Adding 8 bit data to each segment array.
         for ( i = 0; i < numberofblocks; i++) {
             for ( j = ptr; j < ptr + blocksize; j++) {
                 segment[i].add(data[j]);
@@ -73,53 +82,47 @@ public class checksum {
             ptr += blocksize;
         }
 
-        // for ( i = 0; i < numberofblocks; i++) {
-        //     System.out.println(segment[i] + "\n");
-        // }
         
+        
+        //Initialize the newsegment1 & newsegment2 first segment and second segment respectively
         newsegment1 = new ArrayList<Integer>(segment[0]);
         newsegment2 = new ArrayList<Integer>(segment[1]);
         
+        // ptr helps with iterating through segment.
         ptr = 1;
         while(flag == 1){
+            //reversing both newsegment1 and newsegment2 for calculating the remainder from right to left.
             Collections.reverse(newsegment1);
             Collections.reverse(newsegment2);
-            // System.out.println("seg1"+newsegment1);
-            // System.out.println("seg2"+newsegment2);
-            // System.out.println("Ptr: "+ptr);
-        
+            
+                //claering the reaminder for no garbez data in it.
                 remainder1.clear();
-                remainder1 = cs.remain(newsegment1, newsegment2, remainder1, blocksize); 
-                // System.out.println("rem before carry add"+remainder1);
-                // System.out.println(cs.carry);
+
+                //calling remain function and assigning the value to remainder1.
+                remainder1 = cs.remain(newsegment1, newsegment2, remainder1, blocksize);
+
                 
+                
+                // If after the operation if any carry if left then add the buffer to the newly obtained remainder1 to get final remainder1.
                 if (cs.carry == 1) {
                     Collections.reverse(remainder1);
-                    buffer = new ArrayList <> (buffer);
-                    // System.out.println(remainder1);
-                    
-                    if (ptr == ((segment.length) - 1)){
-                        buffer.clear();
-                        buffer.add(1);
-                        for ( i = 0; i < blocksize - 1; i++){
-                            buffer.add(0);
-                        }
-                        // System.out.println(buffer);
-                    }
-                    else{
-                        Collections.reverse(buffer);
-                        // System.out.println(buffer);
-                    }
 
+                    //claering the reaminder for no garbez data in it.
                     remainder2 = new ArrayList<>();
+
+                    //Initializing carry = 0 since we are gonna calculate from start.
                     cs.carry = 0;
+
+                    //calling remain function and assigning the value to remainder1.
                     remainder1 = cs.remain(remainder1,buffer,remainder2,blocksize);
-                    // System.out.println("rem after carry add: "+remainder1);
-                    // System.out.println(cs.carry);
+
                 }
                 
+                //increment ptr to get next segment.
                 ptr++;
-                if (ptr != 4){
+
+                //if ptr == numberofblocks i.e segment size that is in the segment there are 4 sub arrays present if ptr == 4 den stop the reinitialization of newsegment1 and newsegment2 and break.
+                if (ptr != numberofblocks) {
                     newsegment1 = new ArrayList<Integer> (remainder1);
                     newsegment2 = new ArrayList<Integer> (segment[ptr]);
                 }
@@ -129,10 +132,12 @@ public class checksum {
             
         }
 
+        //complimenting the final remainder1 bits to get the actual code.
         for (i = 0; i < remainder1.size(); i++){
             remainder1.set(i,remainder1.get(i) == 1? 0 : 1 );
         }
 
+        //Combing all the 4 sub-arrays of segment and remainder1 to get the Final Codeword
         for (  i  = 0; i < numberofblocks + 1; i++ ){
             if (i < numberofblocks ){
                     code.addAll(segment[i]);
@@ -145,6 +150,8 @@ public class checksum {
         
         ptr = 0;
         j = 1;
+        
+        //Displaying the Segments.
         for ( i =0; i < code.size(); i++){
             if (i == bs) {
                 System.out.print("\nSegment["+j+"]\t");
@@ -155,6 +162,7 @@ public class checksum {
             ptr++;    
         }
         
+        //Displaying the Codeword as String.
         System.out.println("\n\nCodeword: " + code.toString().replaceAll("[\\[\\],]","")+"\n");
     }
 }

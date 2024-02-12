@@ -10,7 +10,7 @@ public class checksum {
         
         //Clearing remainder ones again just to be safe :).
         remainder.clear();
-        
+
         for (int j = 0; j < blocksize; j++) {
             if (newsegment1.get(j) == 0 && newsegment2.get(j) == 0 && carry == 0) {
                 remainder.add(0);
@@ -45,7 +45,7 @@ public class checksum {
     public static void main(String[] args) {
 
         checksum cs = new checksum();
-        int ptr = 0,numberofblocks = 4,blocksize = 8,flag = 1,i,j,bs=0;
+        int ptr = 0,numberofblocks = 4,blocksize = 8,i,j,bs=0;
         int[] data = {1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1}; 
         ArrayList<Integer>[] segment = new ArrayList[numberofblocks];
         ArrayList<Integer> remainder1 = new ArrayList<>();  //To keep the main remainder for calculations.
@@ -57,7 +57,7 @@ public class checksum {
 
         //Displaying the data before ading the codeword
         System.out.print("Entered data is:  ");
-        for (i = 0 ; i < 32; i++){
+        for (i = 0 ; i < data.length; i++){
             System.out.print(data[i]);
         }
         System.out.println("\nNumber of blocks:  " + numberofblocks);
@@ -90,7 +90,7 @@ public class checksum {
         
         // ptr helps with iterating through segment.
         ptr = 1;
-        while(flag == 1){
+        while(true){
             //reversing both newsegment1 and newsegment2 for calculating the remainder from right to left.
             Collections.reverse(newsegment1);
             Collections.reverse(newsegment2);
@@ -126,7 +126,8 @@ public class checksum {
                     newsegment1 = new ArrayList<Integer> (remainder1);
                     newsegment2 = new ArrayList<Integer> (segment[ptr]);
                 }
-                else{
+                else
+                {
                     break;
                 }
             
@@ -137,7 +138,7 @@ public class checksum {
             remainder1.set(i,remainder1.get(i) == 1? 0 : 1 );
         }
 
-        //Combing all the 4 sub-arrays of segment and remainder1 to get the Final Codeword
+        //Combing all the 4 sub-arrays of segment and remainder1 to get the Final Codeword.
         for (  i  = 0; i < numberofblocks + 1; i++ ){
             if (i < numberofblocks ){
                     code.addAll(segment[i]);
@@ -147,10 +148,8 @@ public class checksum {
                 }
             }
         
-        
-        ptr = 0;
+        // Helps in numbering the segments.
         j = 1;
-        
         //Displaying the Segments.
         for ( i =0; i < code.size(); i++){
             if (i == bs) {
@@ -158,8 +157,7 @@ public class checksum {
                 bs = bs + 8 ;
                 j++;
             }
-            System.out.print(code.get(i));
-            ptr++;    
+            System.out.print(code.get(i));    
         }
         
         //Displaying the Codeword as String.

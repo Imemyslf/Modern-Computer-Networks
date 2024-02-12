@@ -49,7 +49,7 @@ public class checksum_detection {
         int ptr = 0,numberofblocks = 5,blocksize = 8,i,j;
         int[] data = {1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0};
 
-        ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 4 sub-arrays in segment.
+        ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 5sub-list in segment.
         ArrayList<Integer> remainder1 = new ArrayList<>();  //To keep the main remainder for calculations.
         ArrayList<Integer> remainder2 = new ArrayList<>(); // Temporary remainder for calculations.
         ArrayList<Integer> newsegment1 = new ArrayList<>(); // Toggle arounds segments.
@@ -63,7 +63,7 @@ public class checksum_detection {
             buffer.add(0);
         }
 
-        //initializing segment array into 4 sub-arrays of segment.
+        //initializing segment array into 4sub-list of segment.
         for ( i = 0; i < numberofblocks; i++) {
             segment[i] = new ArrayList<Integer>();
         }
@@ -113,7 +113,7 @@ public class checksum_detection {
                 //Increment ptr to get next segment.
                 ptr++;
 
-                // If ptr == numberofblocks i.e segment size that is in the segment there are 4 sub-arrays present if ptr == 4 den stop the reinitialization 
+                // If ptr == numberofblocks i.e segment size that is in the segment there are 4sub-list present if ptr == 4 den stop the reinitialization 
                 // of newsegment1 and newsegment2 and break the while loop.
                 if (ptr != numberofblocks) {
                     newsegment1 = new ArrayList<Integer> (remainder1);

@@ -48,7 +48,7 @@ public class checksum {
         int ptr = 0,numberofblocks = 4,blocksize = 8,i,j,bs=0;
         int[] data = {1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1}; 
         
-        ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 4 sub-arrays in segment.
+        ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 4 sub-list in segment.
         ArrayList<Integer> remainder1 = new ArrayList<>();  //To keep the main remainder for calculations.
         ArrayList<Integer> remainder2 = new ArrayList<>(); // Temporary remainder for calculations.
         ArrayList<Integer> newsegment1 = new ArrayList<>(); // Toggle arounds segments.
@@ -74,7 +74,7 @@ public class checksum {
             buffer.add(0);
         }
         
-        // Initializing segment array into 4 sub-arrays of segment.
+        // Initializing segment array into 4 sub-list of segment.
         for ( i = 0; i < numberofblocks; i++) {
             segment[i] = new ArrayList<Integer>();
         }
@@ -126,7 +126,7 @@ public class checksum {
                 // Increment ptr to get next segment.
                 ptr++;
 
-                // If ptr == numberofblocks i.e segment size that is in the segment there are 4 sub-arrays present if ptr == 4 den stop the reinitialization 
+                // If ptr == numberofblocks i.e segment size that is in the segment there are 4 sub-list present if ptr == 4 den stop the reinitialization 
                 // of newsegment1 and newsegment2 and break the while loop.
                 if (ptr != numberofblocks) {
                     newsegment1 = new ArrayList<Integer> (remainder1);
@@ -144,7 +144,7 @@ public class checksum {
             remainder1.set(i,remainder1.get(i) == 1? 0 : 1 );
         }
 
-        //Combing all the 4 sub-arrays of segment and remainder1 to get the Final Codeword.
+        //Combing all the 4 sub-list of segment and remainder1 to get the Final Codeword.
         for (  i  = 0; i < numberofblocks + 1; i++ ){
             if (i < numberofblocks ){
                     code.addAll(segment[i]);

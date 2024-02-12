@@ -1,7 +1,8 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
-public class checksum {
-    
+public class checksum_detection {
+
     //Initialzing carray as global variable to work around the main function and remain function effectively.
     public int carry = 0;
 
@@ -43,11 +44,11 @@ public class checksum {
     }
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
-
-        checksum cs = new checksum();
-        int ptr = 0,numberofblocks = 4,blocksize = 8,i,j,bs=0;
-        int[] data = {1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1}; 
         
+        checksum_detection cs = new checksum_detection();
+        int ptr = 0,numberofblocks = 5,blocksize = 8,i,j;
+        int[] data = {1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0};
+
         ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 4 sub-arrays in segment.
         ArrayList<Integer> remainder1 = new ArrayList<>();  //To keep the main remainder for calculations.
         ArrayList<Integer> remainder2 = new ArrayList<>(); // Temporary remainder for calculations.
@@ -56,25 +57,13 @@ public class checksum {
         ArrayList<Integer> buffer = new ArrayList<>();  // buffer array storing 0 0 0 0 0 0 0 0 1 to add to remainder if carry == 1 at the end.
         ArrayList<Integer> code = new ArrayList<>(); // Storing the actual codeword.
 
-        //Displaying the data before ading the codeword
-        System.out.print("Entered data is:  ");
-        for (i = 0 ; i < data.length; i++){
-            System.out.print(data[i]);
-        }
-        
-        //Displaying number of blocks in the segment.
-        System.out.println("\nNumber of blocks:  " + numberofblocks);
-
-        //Displaying the number of bits in each block respectively.
-        System.out.println("Bits in a block:  "+ blocksize);
-        
-        // Initializing buffer array.
+        // initializing buffer array.
         buffer.add(1);
         for ( i = 0; i < blocksize - 1; i++) {
             buffer.add(0);
         }
-        
-        // Initializing segment array into 4 sub-arrays of segment.
+
+        //initializing segment array into 4 sub-arrays of segment.
         for ( i = 0; i < numberofblocks; i++) {
             segment[i] = new ArrayList<Integer>();
         }
@@ -87,12 +76,10 @@ public class checksum {
             ptr += blocksize;
         }
 
-        
-        
         //Initialize the newsegment1 & newsegment2 first segment and second segment respectively
         newsegment1 = new ArrayList<Integer>(segment[0]);
         newsegment2 = new ArrayList<Integer>(segment[1]);
-        
+
         // ptr helps with iterating through segment.
         ptr = 1;
         while(true){
@@ -103,7 +90,7 @@ public class checksum {
                 //Clearing the reaminder for no garbez data in it.
                 remainder1.clear();
 
-                //calling remain function and assigning the value to remainder1.
+                //Calling remain function and assigning the value to remainder1.
                 remainder1 = cs.remain(newsegment1, newsegment2, remainder1, blocksize);
 
                 
@@ -123,7 +110,7 @@ public class checksum {
 
                 }
                 
-                // Increment ptr to get next segment.
+                //Increment ptr to get next segment.
                 ptr++;
 
                 // If ptr == numberofblocks i.e segment size that is in the segment there are 4 sub-arrays present if ptr == 4 den stop the reinitialization 
@@ -139,51 +126,41 @@ public class checksum {
             
         }
 
+        //Clearing the buffer list to make it zero fro further operations.
+        buffer.clear();
+        for (i = 0; i < blocksize; i++){
+            buffer.add(0);
+        }
+        
         //Complimenting the Final remainder1 bits to get the actual code.
         for (i = 0; i < remainder1.size(); i++){
             remainder1.set(i,remainder1.get(i) == 1? 0 : 1 );
         }
 
-        //Combing all the 4 sub-arrays of segment and remainder1 to get the Final Codeword.
-        for (  i  = 0; i < numberofblocks + 1; i++ ){
-            if (i < numberofblocks ){
-                    code.addAll(segment[i]);
-                }
-                else{
-                    code.addAll(remainder1);
-                }
+        // If remainder1 = 0 then display no error and proceed to discard the last segment from segment list.
+        // Else display error and ask to retransmit the data again.
+        if (remainder1.equals(buffer)){
+            System.out.println("\n\u001B[32mNo Error Detected....\u001B[39m\n");
+
+            for (i = 0; i < numberofblocks -1 ; i++){
+                code.addAll(segment[i]);
             }
-        
-        // Helps in numbering the segments.
-        j = 1;
-        //Displaying the Segments.
-        for ( i =0; i < code.size(); i++){
-            if (i == bs) {
-                System.out.print("\nSegment["+j+"]\t");
-                bs = bs + 8 ;
+
+            // j helps in numbering the segments.
+            j =1;
+            // Displaying the 4 segment discarding the 5th segment.
+            for ( i =0; i < numberofblocks - 1 ; i++){
+                System.out.println("Segment["+j+"]: "+segment[i].toString().replaceAll("[\\[\\],]",""));
                 j++;
             }
-            System.out.print(code.get(i));    
+
+            //Final code after discarding the last segment.
+            System.out.println("\nFinal Data: " + code.toString().replaceAll("[\\[\\],]",""));
         }
-        
-        //Displaying the Codeword as String.
-        System.out.println("\n\nCodeword: " + code.toString().replaceAll("[\\[\\],]","")+"\n");
+        else{
+            //Displaying error message and to retransmit the data again.
+            System.out.println("\u001B[31mError Detected....\nPlease Retransmit The Data Again. \u001B[39m");
+        }
+
     }
 }
-
-/*
- Example:-
-
-Entered data is:  10110011101010110101101011010101
-Number of blocks:  4
-Bits in a block:  8
-
-Segment[1]      10110011
-Segment[2]      10101011
-Segment[3]      01011010
-Segment[4]      11010101
-Segment[5]      01110000
-
-Codeword: 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
-
- */

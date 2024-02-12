@@ -88,10 +88,10 @@ public class crcdetection {
                 j--;
             }
 
-            System.out.println("Actual data: "+ dividend.toString().replaceAll("[\\[\\],]","")+"\u001B[37m");
+            System.out.println("Actual data: "+ dividend.toString().replaceAll("[\\[\\],]","")+"\u001B[39m");
         }
         else {
-            System.out.println(" \u001B[31mError detected: \n Please Retransmit The Data.\u001B[37m " );
+            System.out.println(" \u001B[31mError detected: \n Please Retransmit The Data.\u001B[39m " );
         }
     }
 

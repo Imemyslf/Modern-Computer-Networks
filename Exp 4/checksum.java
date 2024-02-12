@@ -94,7 +94,7 @@ public class checksum {
                 // System.out.println(cs.carry);
                 
                 if (cs.carry == 1) {
-                    // Collections.reverse(remainder1);
+                    Collections.reverse(remainder1);
                     buffer = new ArrayList <> (buffer);
                     // System.out.println(remainder1);
                     
@@ -128,7 +128,11 @@ public class checksum {
                 }
             
         }
-        
+
+        for (i = 0; i < remainder1.size(); i++){
+            remainder1.set(i,remainder1.get(i) == 1? 0 : 1 );
+        }
+
         for (  i  = 0; i < numberofblocks + 1; i++ ){
             if (i < numberofblocks ){
                     code.addAll(segment[i]);
@@ -166,8 +170,8 @@ Segment[1]      10110011
 Segment[2]      10101011
 Segment[3]      01011010
 Segment[4]      11010101
-Segment[5]      01010110
+Segment[5]      01110000
 
-Codeword: 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0
+Codeword: 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
 
  */

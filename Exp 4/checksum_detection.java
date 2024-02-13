@@ -46,7 +46,7 @@ public class checksum_detection {
         
         checksum_detection cs = new checksum_detection();
         int ptr = 0,numberofblocks = 5,blocksize = 8,i,j;
-        int[] data = {1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1,0,1,1,1,0,0,0,1};
+        int[] data = {1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0};
 
         ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 5 sub-list in segment.
         ArrayList<Integer> remainder1 = new ArrayList<>();  //To keep the main remainder for calculations.
@@ -65,7 +65,7 @@ public class checksum_detection {
         //Displaying the data before ading the codeword
         System.out.print("\nEntered data is:  ");
         for (i = 0 ; i < data.length; i++){
-            System.out.print(data[i]);
+            System.out.print(data[i]+" ");
         }
         
         //Displaying number of blocks in the segment.

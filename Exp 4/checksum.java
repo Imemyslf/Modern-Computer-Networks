@@ -60,7 +60,7 @@ public class checksum {
         //Displaying the data before ading the codeword
         System.out.print("Entered data is:  ");
         for (i = 0 ; i < data.length; i++){
-            System.out.print(data[i]);
+            System.out.print(data[i]+" ");
         }
         
         //Displaying number of blocks in the segment.
@@ -165,7 +165,7 @@ public class checksum {
                 bs = bs + 8 ;
                 j++;
             }
-            System.out.print(code.get(i));    
+            System.out.print(code.get(i)+" ");    
         }
         
         //Displaying the Codeword as String.

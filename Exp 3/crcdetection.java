@@ -30,7 +30,6 @@ public class crcdetection
     {
         int i;
         ArrayList <Integer> divid = new ArrayList <Integer> (dividend); // Initializing temporary dividend list for calculation purpose.
-        ArrayList <Integer> divir = new ArrayList <Integer> (divisor); // Initializing temporary dividend list for calculation purpose.
         ArrayList <Integer> zeros = new ArrayList <Integer> (); // creating a zero list with empty elements.
         ArrayList <Integer> quotient = new ArrayList <Integer> (); // creating a quotient list to add the quotient elements.
         ArrayList <Integer> remainder = new ArrayList <Integer> (); // creating a remainder list to add the remainder elements.
@@ -48,13 +47,10 @@ public class crcdetection
             // If first element is 1 the go inside the if statement.
             if (divid.get(0) == 1)
             {
-                // Initialize divir = dividend. Since we will clear divir multiple times so we have initialize divir = divisor when first element of divid is 1.
-                divir = new ArrayList <Integer> (divisor);
-
-                // Applying xor opreation on divid and divr and add it to remainder.
+                // Applying xor opreation on divid and divisor and add it to remainder.
                 for ( i = 0; i < sizeofdivisor; i++)
                 {
-                    remainder.add( divid.get(i) ^ divir.get(i) );
+                    remainder.add( divid.get(i) ^ divisor.get(i));
                 }
 
                 //if it is first iteration when divid = 1 then...
@@ -65,10 +61,8 @@ public class crcdetection
 
                     //Calling remain() function and assigning the value to newly obtained divid.
                     divid = remain(remainder,divid);
-                    //Clearing remainder and divid to initialize the new values for further opreations.
-                    remainder.clear();
-                    divir.clear();
-                    
+                    //Clearing remainder to initialize the new values for further opreations.
+                    remainder.clear();                    
                 }
                 else
                 {
@@ -80,24 +74,17 @@ public class crcdetection
                     {
                         //Calling remain() function and assigning the value to newly obtained divid.
                         divid = remain(remainder,divid);
-                        //Clearing remainder and divid to initialize the new values.
-                        remainder.clear();
-                        divir.clear();
-                        
+                        //Clearing remainder to initialize the new values.
+                        remainder.clear();                        
                     }
                 }
             }
             else {
-                // If the first element of divid is 0 then initialize divir to zero.
-                for (i = 0; i< divisor.size(); i++)
-                {
-                    divir.add(0);
-                }
 
-                // Applying xor opreation on divid and divr and add it to remainder.
+                // Applying xor opreation on divid and zero that add it to remainder.
                 for ( i = 0; i < divisor.size(); i++) 
                 {
-                    remainder.add(divid.get(i) ^ divir.get(i));
+                    remainder.add(divid.get(i) ^ 0);
                 }
                 
                 //if it is first iteration when divid = 0 then...
@@ -107,9 +94,9 @@ public class crcdetection
                     ptr = i;
                     //Calling remain() function and assigning the value to newly obtained divid.
                     divid = remain(remainder,divid);
-                    //Clearing remainder and divid to initialize the new values for further opreations.
+                    //Clearing remainder to initialize the new values for further opreations.
                     remainder.clear();
-                    divir.clear();
+                    // divir.clear();
                     
                 }
                 else
@@ -122,9 +109,9 @@ public class crcdetection
                     {
                         //Calling remain() function and assigning the value to newly obtained divid.
                         divid = remain(remainder,divid);
-                        //Clearing remainder and divid to initialize the new values for further opreations.
+                        //Clearing remainder to initialize the new values for further opreations.
                         remainder.clear();
-                        divir.clear();
+                        // divir.clear();
                         
                     }
                 }

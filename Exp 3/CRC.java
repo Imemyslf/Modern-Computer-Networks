@@ -29,7 +29,6 @@ class CRC
     {
         int i;
         ArrayList<Integer> divid = new ArrayList<Integer> (dividend); // Initializing temporary dividend list for calculation purpose.
-        ArrayList<Integer> divir = new ArrayList<Integer> (divisor); // Initializing temporary dividend list for calculation purpose.
         ArrayList<Integer> remainder = new ArrayList<>(); // creating a remainder list to add the remainder elements.
         ArrayList<Integer> quotient = new ArrayList<>(); // creating a quotient list to add the quotient elements.
         
@@ -40,16 +39,12 @@ class CRC
             
             // If first element is 1 the go inside the if statement else if first element divid = 0 then in else part.
             if (divid.get(0) == 1)
-            {
-                
-                // Initialize divir = dividend. Since we will clear divir multiple times so we have initialize divir = divisor when first element of divid is 1.
-                divir = new ArrayList<>(divisor);
-                
+            {                
                 // Applying xor opreation on divid and divr and add it to remainder.
                 for ( i=0; i < divisor.size(); i++)
                 {
                     
-                    remainder.add(divid.get(i) ^ divir.get(i));
+                    remainder.add(divid.get(i) ^ divisor.get(i));
                 }
                 
                 //if it is first iteration when divid = 1 then...
@@ -63,7 +58,7 @@ class CRC
 
                     //Clearing remainder and divid to initialize the new values for further opreations.
                     remainder.clear();
-                    divir.clear();
+                    // divir.clear();
                 }
                 else
                 {
@@ -77,23 +72,17 @@ class CRC
                         divid = remain(remainder,divid);
                         //Clearing remainder and divid to initialize the new values for further opreations.
                         remainder.clear();
-                        divir.clear();
+                        // divir.clear();
                     }
                 }    
             }
 
             else 
-            {
-                // If the first element of divid is 0 then initialize divir to zero.
+            {                
+                // Applying xor opreation on divid and zeros that add it to remainder.
                 for ( i=0; i < divisor.size(); i++)
                 {
-                    divir.add(0);
-                }
-                
-                // Applying xor opreation on divid and divr and add it to remainder.
-                for ( i=0; i < divisor.size(); i++)
-                {
-                    remainder.add(divid.get(i) ^ divir.get(i));
+                    remainder.add(divid.get(i) ^ 0);
                 }
 
                 //if it is first iteration when divid = 0 then...
@@ -105,7 +94,7 @@ class CRC
                     divid = remain(remainder,divid);
                     //Clearing remainder and divid to initialize the new values for further opreations.
                     remainder.clear();
-                    divir.clear();
+                    // divir.clear();
                 }
                 
                 else 
@@ -119,7 +108,7 @@ class CRC
                         divid = remain(remainder,divid);
                         //Clearing remainder and divid to initialize the new values for further opreations.
                         remainder.clear();
-                        divir.clear();
+                        // divir.clear();
                     }  
                 }
                

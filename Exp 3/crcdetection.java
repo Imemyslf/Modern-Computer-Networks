@@ -1,6 +1,7 @@
 import java.util.*;
 
-public class crcdetection {
+public class crcdetection 
+{
 
     //Initialization of ptr as global variable to toggle around the errordetection() function and remain() function effectively.
     private int ptr;
@@ -10,7 +11,8 @@ public class crcdetection {
     public ArrayList<Integer> divisor = new ArrayList<Integer> ();
 
     // remain() function.
-    public ArrayList<Integer> remain(ArrayList<Integer> remainder,ArrayList<Integer> divid) {
+    public ArrayList<Integer> remain(ArrayList<Integer> remainder,ArrayList<Integer> divid) 
+    {
         //Remove the first elemnt of remainder.
         remainder.remove(0);
         // Add ptr to remainder.
@@ -24,7 +26,8 @@ public class crcdetection {
     }
 
     // errordetection() function.
-    public void errordetection(int sizeofdividend,int sizeofdivisor){
+    public void errordetection(int sizeofdividend,int sizeofdivisor)
+    {
         int i;
         ArrayList <Integer> divid = new ArrayList <Integer> (dividend); // Initializing temporary dividend list for calculation purpose.
         ArrayList <Integer> divir = new ArrayList <Integer> (divisor); // Initializing temporary dividend list for calculation purpose.
@@ -33,7 +36,8 @@ public class crcdetection {
         ArrayList <Integer> remainder = new ArrayList <Integer> (); // creating a remainder list to add the remainder elements.
 
         // Adding divisor.size() = 4 numbers of zero to zeros list.
-        for (i = 0; i < divisor.size(); i++){
+        for (i = 0; i < divisor.size(); i++)
+        {
             zeros.add(0);
         }
 
@@ -42,17 +46,20 @@ public class crcdetection {
             quotient.add(divid.get(0)); // Adding the first element of divid to quotient.
             
             // If first element is 1 the go inside the if statement.
-            if (divid.get(0) == 1){
+            if (divid.get(0) == 1)
+            {
                 // Initialize divir = dividend. Since we will clear divir multiple times so we have initialize divir = divisor when first element of divid is 1.
                 divir = new ArrayList <Integer> (divisor);
 
                 // Applying xor opreation on divid and divr and add it to remainder.
-                for ( i = 0; i < sizeofdivisor; i++){
+                for ( i = 0; i < sizeofdivisor; i++)
+                {
                     remainder.add( divid.get(i) ^ divir.get(i) );
                 }
 
                 //if it is first iteration when divid = 1 then...
-                if ( k == 0 ){
+                if ( k == 0 )
+                {
                     //initialize ptr = i to add the next elemt of dividend.
                     ptr = i;
 
@@ -69,7 +76,8 @@ public class crcdetection {
                     ptr = this.ptr + 1;
 
                     // If ptr != dividend.size() then i.e ptr != 15(example) then do the opreations. When ptr == 15 dont do  anything.
-                    if (ptr != dividend.size()){
+                    if (ptr != dividend.size())
+                    {
                         //Calling remain() function and assigning the value to newly obtained divid.
                         divid = remain(remainder,divid);
                         //Clearing remainder and divid to initialize the new values.
@@ -81,12 +89,14 @@ public class crcdetection {
             }
             else {
                 // If the first element of divid is 0 then initialize divir to zero.
-                for (i = 0; i< divisor.size(); i++){
+                for (i = 0; i< divisor.size(); i++)
+                {
                     divir.add(0);
                 }
 
                 // Applying xor opreation on divid and divr and add it to remainder.
-                for ( i = 0; i < divisor.size(); i++) {
+                for ( i = 0; i < divisor.size(); i++) 
+                {
                     remainder.add(divid.get(i) ^ divir.get(i));
                 }
                 
@@ -122,13 +132,15 @@ public class crcdetection {
         }
         
         // If remainder = 0 then display No error message else display Error detected.
-        if (remainder.equals(zeros)){
+        if (remainder.equals(zeros))
+        {
             System.out.println("\u001B[32mNo error");
             
             // Initializing the last index of dividend to j.
             int j = dividend.size() - 1;
             // Remove divisor.size() - 1  bits (Example) 6 - 1 = 5 bits from dividend.
-            for (i = 0; i < divisor.size() - 1; i++){
+            for (i = 0; i < divisor.size() - 1; i++)
+            {
                 dividend.remove(j);
                 j--;
             }
@@ -136,13 +148,15 @@ public class crcdetection {
             //Display the Final Data.
             System.out.println("Actual data: "+ dividend.toString().replaceAll("[\\[\\],]","")+"\u001B[39m");
         }
-        else {
+        else 
+        {
             System.out.println("\n\u001B[31mError detected: \nPlease Retransmit The Data.\u001B[39m " );
         }
     }
 
     @SuppressWarnings("resource")
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         crcdetection cd = new crcdetection();
         Scanner s = new Scanner(System.in);
         int i;
@@ -157,14 +171,16 @@ public class crcdetection {
 
         //Initializing the dividend list.
         System.out.println("Enter the dividend: ");
-        for( i = 0; i < sizeofdividend; i++ ){
+        for( i = 0; i < sizeofdividend; i++ )
+        {
             int k = s.nextInt();
             cd.dividend.add(k);
         }
 
         //Initializing divisor list.
         System.out.println("Enter the divisor: ");
-        for( i = 0; i < sizeofdivisor; i++ ){
+        for( i = 0; i < sizeofdivisor; i++ )
+        {
             int k = s.nextInt();
             cd.divisor.add(k);
         }
@@ -176,7 +192,7 @@ public class crcdetection {
 }
 
 /*
-=> Example:- (No Error)
+=> Example:- (No Error) 
 
 Enter the size of dividend: 
 15

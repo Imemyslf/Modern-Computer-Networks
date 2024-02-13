@@ -137,8 +137,8 @@ class CRC
         }
         
         // Addinng the crccode to the dividend.
-        for ( i = 0; i < (divisor.size() - 1); i++) {
-                
+        for ( i = 0; i < (divisor.size() - 1); i++) 
+        {                
             dividend.add(crccode.get(i));
         }
         
@@ -152,7 +152,8 @@ class CRC
     }
    
     @SuppressWarnings("resource")
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
        
         CRC k = new CRC();
         Scanner scanner = new Scanner(System.in);
@@ -168,23 +169,23 @@ class CRC
         
         // Initial the dividend list.
         System.out.print("\n Enter the dividend:\t");
-        for ( i = 0; i < sizeofdividend; i++){
-            
+        for ( i = 0; i < sizeofdividend; i++)
+        {            
             int s1 = scanner.nextInt();
             k.dividend.add(s1);
         }
         
         // Initialize the divisor list.
         System.out.print("\n Enter the divisor:\t");
-        for ( i = 0; i < sizeofdivisor; i++){
-            
+        for ( i = 0; i < sizeofdivisor; i++)
+        {            
             int s2 = scanner.nextInt();
             k.divisor.add(s2);
         }
         
         // Adding (divisor.size() - 1) zeros to the dividend. 
-        for ( i = 0; i < (k.divisor.size() - 1); i++){
-            
+        for ( i = 0; i < (k.divisor.size() - 1); i++)
+        {
             k.dividend.add(0);
         }
         

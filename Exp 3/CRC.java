@@ -30,8 +30,8 @@ class CRC
         int i;
         ArrayList<Integer> divid = new ArrayList<Integer> (dividend); // Initializing temporary dividend list for calculation purpose.
         ArrayList<Integer> divir = new ArrayList<Integer> (divisor); // Initializing temporary dividend list for calculation purpose.
-        ArrayList<Integer> remainder = new ArrayList<>(); // creating a quotient list to add the quotient elements.
-        ArrayList<Integer> quotient = new ArrayList<>(); // creating a remainder list to add the remainder elements.
+        ArrayList<Integer> remainder = new ArrayList<>(); // creating a remainder list to add the remainder elements.
+        ArrayList<Integer> quotient = new ArrayList<>(); // creating a quotient list to add the quotient elements.
         
         // The loop will run till (dividend.size() - divisor.size()) + 1 i.e Example (8 - 4) + 1 = 5 times.
         for (int k = 0; k < (( dividend.size() - divisor.size() ) + 1); k++)
@@ -158,11 +158,11 @@ class CRC
         Scanner scanner = new Scanner(System.in);
         int i;
         
-        // Intialize the siez of dividend.
+        // Intialize the size of dividend.
         System.out.print("\n Enter the size of dividend:\t");
         int sizeofdividend = scanner.nextInt();
 
-        //  Initialize the siez of divisor.
+        //  Initialize the size of divisor.
         System.out.print("\n Enter the size of divisor:\t");
         int sizeofdivisor = scanner.nextInt();
         
@@ -201,7 +201,7 @@ class CRC
 }
 
 /*
-Example:- 
+=> Example:- 
 
 
  Enter the size of dividend:    8

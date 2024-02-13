@@ -137,7 +137,7 @@ public class crcdetection {
             System.out.println("Actual data: "+ dividend.toString().replaceAll("[\\[\\],]","")+"\u001B[39m");
         }
         else {
-            System.out.println(" \u001B[31mError detected: \n Please Retransmit The Data.\u001B[39m " );
+            System.out.println("\n\u001B[31mError detected: \nPlease Retransmit The Data.\u001B[39m " );
         }
     }
 
@@ -176,7 +176,8 @@ public class crcdetection {
 }
 
 /*
- 
+=> Example:- (No Error)
+
 Enter the size of dividend: 
 15
 Enter size of divisor:
@@ -187,5 +188,19 @@ Enter the divisor:
 1 1 0 1 0 1
 No error
 Actual data: 1 0 1 0 0 0 1 1 0 1
+
+=> Example:- (Error Detected)
+
+Enter the size of dividend: 
+6
+Enter size of divisor:
+4
+Enter the dividend:
+1 1 0 1 0 1
+Enter the divisor:
+1 0 0 1
+
+Error detected:
+Please Retransmit The Data.
 
  */

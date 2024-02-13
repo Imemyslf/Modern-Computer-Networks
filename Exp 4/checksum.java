@@ -38,6 +38,7 @@ public class checksum {
                 carry = 1;
             }
         }
+        // To make it human readable.
         Collections.reverse(remainder);
         return remainder;
     }
@@ -68,18 +69,18 @@ public class checksum {
         //Displaying the number of bits in each block respectively.
         System.out.println("Bits in a block:  "+ blocksize);
         
-        // Initializing buffer array.
+        // Initializing buffer list.
         buffer.add(1);
         for ( i = 0; i < blocksize - 1; i++) {
             buffer.add(0);
         }
         
-        // Initializing segment array into 4 sub-list of segment.
+        // Initializing segment list into 4 sub-list of segment.
         for ( i = 0; i < numberofblocks; i++) {
             segment[i] = new ArrayList<Integer>();
         }
 
-        //Adding 8 bit data to each segment array.
+        //Adding 8 bit data to each segment list.
         for ( i = 0; i < numberofblocks; i++) {
             for ( j = ptr; j < ptr + blocksize; j++) {
                 segment[i].add(data[j]);
@@ -110,6 +111,7 @@ public class checksum {
                 
                 // If after the operation if any carry is left then add the buffer to the newly obtained remainder1 to get final remainder1.
                 if (cs.carry == 1) {
+                    // Reversing remainnder for calculation purpose.
                     Collections.reverse(remainder1);
 
                     //Clearing the temporary reaminder for no garbez data in it.
@@ -172,7 +174,7 @@ public class checksum {
 }
 
 /*
- Example:-
+=> Example:-
 
 Entered data is:  10110011101010110101101011010101
 Number of blocks:  4

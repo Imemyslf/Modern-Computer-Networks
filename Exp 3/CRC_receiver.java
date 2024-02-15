@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class crcdetection 
+public class CRC_receiver 
 {
 
     //Initialization of ptr as global variable to toggle around the errordetection() function and remain() function effectively.
@@ -121,7 +121,7 @@ public class crcdetection
         // If remainder = 0 then display No error message else display Error detected.
         if (remainder.equals(zeros))
         {
-            System.out.println("\u001B[32mNo error");
+            System.out.println("\n\u001B[32mNo error");
             
             // Initializing the last index of dividend to j.
             int j = dividend.size() - 1;
@@ -137,27 +137,27 @@ public class crcdetection
         }
         else 
         {
-            System.out.println("\n\u001B[31mError detected: \nPlease Retransmit The Data.\u001B[39m " );
+            System.out.println("\n\u001B[31mError detected: \nPlease Retransmit The Correct Data.\u001B[39m " );
         }
     }
 
     @SuppressWarnings("resource")
     public static void main(String[] args) 
     {
-        crcdetection cd = new crcdetection();
+        CRC_receiver cd = new CRC_receiver();
         Scanner s = new Scanner(System.in);
         int i;
 
         // Initializing the size of dividend.
-        System.out.println("Enter the size of dividend: ");
+        System.out.print("\nEnter the size of dividend: ");
         int sizeofdividend = s.nextInt();
 
         //Initializing the size of divisor.
-        System.out.println("Enter size of divisor: ");
+        System.out.print("\nEnter size of divisor: ");
         int sizeofdivisor = s.nextInt();
 
         //Initializing the dividend list.
-        System.out.println("Enter the dividend: ");
+        System.out.print("\nEnter the dividend: ");
         for( i = 0; i < sizeofdividend; i++ )
         {
             int k = s.nextInt();
@@ -165,7 +165,7 @@ public class crcdetection
         }
 
         //Initializing divisor list.
-        System.out.println("Enter the divisor: ");
+        System.out.print("\nEnter the divisor: ");
         for( i = 0; i < sizeofdivisor; i++ )
         {
             int k = s.nextInt();
@@ -181,29 +181,28 @@ public class crcdetection
 /*
 => Example:- (No Error) 
 
-Enter the size of dividend: 
-15
-Enter size of divisor:
-6
-Enter the dividend:
-1 0 1 0 0 0 1 1 0 1 0 1 1 1 0
-Enter the divisor:
-1 1 0 1 0 1
+Enter the size of dividend: 9
+
+Enter size of divisor: 4
+
+Enter the dividend: 1 0 0 1 0 0 0 0 1
+
+Enter the divisor: 1 1 0 1
+
 No error
-Actual data: 1 0 1 0 0 0 1 1 0 1
+Actual data: 1 0 0 1 0 0
 
 => Example:- (Error Detected)
 
-Enter the size of dividend: 
-6
-Enter size of divisor:
-4
-Enter the dividend:
-1 1 0 1 0 1
-Enter the divisor:
-1 0 0 1
+Enter the size of dividend: 6
+
+Enter size of divisor: 4
+
+Enter the dividend: 1 1 0 1 0 1
+
+Enter the divisor: 1 0 0 1
 
 Error detected:
-Please Retransmit The Data.
+Please Retransmit The Correct Data.
 
  */

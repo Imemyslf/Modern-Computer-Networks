@@ -1,6 +1,6 @@
 import java.util.*;
 
-class CRC 
+class CRC_sender 
 {
    
     //Initialization of ptr as global variable to toggle around the errordetection() function and remain() function effectively.
@@ -144,7 +144,7 @@ class CRC
     public static void main(String[] args) 
     {
        
-        CRC k = new CRC();
+        CRC_sender k = new CRC_sender();
         Scanner scanner = new Scanner(System.in);
         int i;
         

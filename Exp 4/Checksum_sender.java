@@ -1,7 +1,9 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
 
-public class checksum_detection {
-
+public class Checksum_sender {
+    
     //Initialzing carray as global variable to work around the main function and remain function effectively.
     public int carry = 0;
 
@@ -38,17 +40,17 @@ public class checksum_detection {
                 carry = 1;
             }
         }
+        // To make it human readable.
         Collections.reverse(remainder);
         return remainder;
     }
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
-        
-        checksum_detection cs = new checksum_detection();        
-        Scanner s = new Scanner(System.in);
-        int i,j,sum,ptr = 0,numberofblocks,blocksize,bs = 0;
 
-        // ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 5 sub-list in segment.
+        Checksum_sender cs = new Checksum_sender();
+        Scanner s = new Scanner(System.in);
+        int i,j,sum,ptr = 0,numberofblocks = 0,blocksize = 0,bs=0;
+        
         ArrayList<Integer> remainder1 = new ArrayList<>();  //To keep the main remainder for calculations.
         ArrayList<Integer> remainder2 = new ArrayList<>(); // Temporary remainder for calculations.
         ArrayList<Integer> newsegment1 = new ArrayList<>(); // Toggle arounds segments.
@@ -73,7 +75,7 @@ public class checksum_detection {
         // Declaring sum = sizeofdata for future opreations.
         sum = sizeofdata;
 
-        // Finding the numbers of blocks and block size. only applicable for even numbers.
+        // Finding the numbers of blocks and block size.Only applicable for even numbers.
         for (i = 1; i < sizeofdata; i++)
         {
             if (sizeofdata % i == 0)
@@ -96,7 +98,7 @@ public class checksum_detection {
         // Clearing the code list for not having any garbaze value where in future we add the actual code.
         code.clear();
 
-        //Adding numberofblocks of  sub-list in segment Example if data in bit is 40 den number of block  = 5 so 5 sub-list to be created.
+        //Adding numberofblocks of  sub-list in segment Example if data in bit is 32 den number of block  = 4 so 4 sub-list to be created.
         ArrayList<Integer>[] segment = new ArrayList[numberofblocks];
         
         //Displaying the data before ading the codeword
@@ -111,20 +113,20 @@ public class checksum_detection {
         //Displaying the number of bits in each block respectively.
         System.out.println("\nBits in a block:  "+ blocksize);
 
-
+        
+        
         // Initializing buffer list.
         buffer.add(1);
         for ( i = 0; i < blocksize - 1; i++) {
             buffer.add(0);
         }
-
         
-        //initializing segment list into 5 sub-list of segment.
+        // Initializing segment list into 4 sub-list of segment.
         for ( i = 0; i < numberofblocks; i++) {
             segment[i] = new ArrayList<Integer>();
         }
 
-        //Adding 8 bit data to each segment list repectively.
+        //Adding 8 bit data to each segment list.
         for ( i = 0; i < numberofblocks; i++) {
             for ( j = ptr; j < ptr + blocksize; j++) {
                 segment[i].add(data[j]);
@@ -135,7 +137,7 @@ public class checksum_detection {
 
         j = 1;
         //Displaying segments before code generation.
-        System.out.print("\nSegments before retreving actual data:");
+        System.out.print("\nSegments before code generation:");
         for ( i =0; i < code.size(); i++){
             if (i == bs) {
                 System.out.print("\nSegment["+j+"]\t");
@@ -143,11 +145,12 @@ public class checksum_detection {
                 j++;
             }
             System.out.print(code.get(i)+" ");    
-        }
+        }   
+        
         //Initialize the newsegment1 & newsegment2 first segment and second segment respectively
         newsegment1 = new ArrayList<Integer>(segment[0]);
         newsegment2 = new ArrayList<Integer>(segment[1]);
-
+        
         // ptr helps with iterating through segment.
         ptr = 1;
         while(true){
@@ -158,14 +161,12 @@ public class checksum_detection {
                 //Clearing the reaminder for no garbez data in it.
                 remainder1.clear();
 
-                //Calling remain function and assigning the value to remainder1.
+                //calling remain function and assigning the value to remainder1.
                 remainder1 = cs.remain(newsegment1, newsegment2, remainder1, blocksize);
-
-                
                 
                 // If after the operation if any carry is left then add the buffer to the newly obtained remainder1 to get final remainder1.
                 if (cs.carry == 1) {
-                    //Reversing remainder for calculation purpose.
+                    // Reversing remainnder for calculation purpose.
                     Collections.reverse(remainder1);
 
                     //Clearing the temporary reaminder for no garbez data in it.
@@ -179,10 +180,10 @@ public class checksum_detection {
 
                 }
                 
-                //Increment ptr to get next segment.
+                // Increment ptr to get next segment.
                 ptr++;
 
-                // If ptr == numberofblocks i.e segment size that is in the segment there are 4sub-list present if ptr == 4 den stop the reinitialization 
+                // If ptr == numberofblocks i.e segment size that is in the segment there are 4 sub-list present if ptr == 4 den stop the reinitialization 
                 // of newsegment1 and newsegment2 and break the while loop.
                 if (ptr != numberofblocks) {
                     newsegment1 = new ArrayList<Integer> (remainder1);
@@ -195,103 +196,72 @@ public class checksum_detection {
             
         }
 
-        //Clearing the buffer list to make it zero for further operations.
-        buffer.clear();
-        for (i = 0; i < blocksize; i++){
-            buffer.add(0);
-        }
-        
         //Complimenting the Final remainder1 bits to get the actual code.
         for (i = 0; i < remainder1.size(); i++){
             remainder1.set(i,remainder1.get(i) == 1? 0 : 1 );
         }
 
-        // If remainder1 = 0 then display no error and proceed to discard the last segment from segment list.
-        // Else display error and ask to retransmit the data again.
-        if (remainder1.equals(buffer)){
-            System.out.println("\n\n\u001B[32mNo Error Detected....\u001B[39m\n");
-
-            code.clear();
-            for (i = 0; i < numberofblocks -1 ; i++){
-                code.addAll(segment[i]);
+        code.clear();
+        //Combing all the 4 sub-list of segment and remainder1 to get the Final Codeword.
+        for (  i  = 0; i < numberofblocks + 1; i++ ){
+            if (i < numberofblocks ){
+                    code.addAll(segment[i]);
+                }
+                else{
+                    code.addAll(remainder1);
+                }
             }
-
-            // j helps in numbering the segments.
-            j =1;
-            // Displaying the 4 segment discarding the 5th segment.
-            System.out.println("\nSegmenst after retrieving actual data");
-            for ( i =0; i < numberofblocks - 1 ; i++){
-                System.out.println("Segment["+j+"]: "+segment[i].toString().replaceAll("[\\[\\],]",""));
+        
+        // Helps in numbering the segments.
+        j = 1;
+        // Initializing bs = 0 for iteration and numerinng purpose.
+        bs = 0;
+        //Displaying the Segments.
+        System.out.print("\n\nSegments after code generation:");
+        for ( i =0; i < code.size(); i++){
+            if (i == bs) {
+                System.out.print("\nSegment["+j+"]\t");
+                bs = bs + 8 ;
                 j++;
             }
-
-            //Final code after discarding the last segment.
-            System.out.println("\nActual Data: " + code.toString().replaceAll("[\\[\\],]",""));
+            System.out.print(code.get(i)+" ");    
         }
-        else{
-            //Displaying error message and to retransmit the data again.
-            System.out.println("\n\n\u001B[31mError Detected....\nPlease Retransmit The Data Again. \u001B[39m");
-        }
-
+        
+        //Displaying the Codeword as String.
+        System.out.println("\n\nCodeword: " + code.toString().replaceAll("[\\[\\],]","")+"\n");
     }
 }
 
 /*
 
-=> Example1:- (No error)
-// data(For reference) => 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
+data = 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1
 
-Enter the size of the data: 40
+=> Example:-
+
+Enter the size of the data: 32
 
 Enter the data:
-1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
+1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1
 
 Entered data is:
-1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
+1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1
 
-Number of blocks:  5
+Number of blocks:  4
 
 Bits in a block:  8
 
-Segmenst before retrieving actual data:
+Segments before code generation:
 Segment[1]      1 0 1 1 0 0 1 1
-Segment[2]      1 0 1 0 1 0 1 1
+Segment[2]      1 0 1 0 1 0 1 1 
+Segment[3]      0 1 0 1 1 0 1 0
+Segment[4]      1 1 0 1 0 1 0 1
+
+Segments after code generation:
+Segment[1]      1 0 1 1 0 0 1 1
+Segment[2]      1 0 1 0 1 0 1 1 
 Segment[3]      0 1 0 1 1 0 1 0
 Segment[4]      1 1 0 1 0 1 0 1
 Segment[5]      0 1 1 1 0 0 0 0
 
-No Error Detected....
-
-Segmenst after retrieving actual data
-Segment[1]: 1 0 1 1 0 0 1 1
-Segment[2]: 1 0 1 0 1 0 1 1
-Segment[3]: 0 1 0 1 1 0 1 0
-Segment[4]: 1 1 0 1 0 1 0 1
-
-Final Data: 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1
-
-
-=> Example2:- (Error)
-Enter the size of the data: 40
-
-Enter the data:
-1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 1
-
-Entered data is:
-1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 1 
-
-Number of blocks:  5
-
-Bits in a block:  8
-
-Segments before retreving actual data:
-Segment[1]      1 0 1 1 0 0 1 1
-Segment[2]      1 0 1 0 1 0 1 1
-Segment[3]      0 1 0 1 1 0 1 0
-Segment[4]      1 1 0 1 0 1 0 1 
-Segment[5]      0 1 1 1 0 0 0 1
-
-Error Detected....
-Please Retransmit The Data Again.
-
+Codeword: 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
  */

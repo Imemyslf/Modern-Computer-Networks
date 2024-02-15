@@ -47,7 +47,6 @@ public class checksum_detection {
         checksum_detection cs = new checksum_detection();        
         Scanner s = new Scanner(System.in);
         int i,j,sum,ptr = 0,numberofblocks,blocksize,bs = 0;
-        // int[] data = {1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0};
 
         // ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 5 sub-list in segment.
         ArrayList<Integer> remainder1 = new ArrayList<>();  //To keep the main remainder for calculations.
@@ -97,7 +96,7 @@ public class checksum_detection {
         // Clearing the code list for not having any garbaze value where in future we add the actual code.
         code.clear();
 
-        //Adding numberofblocks of  sub-list in segment Example if data in bit is 32 den number of block  = 4 so 4 sub-list to be created.
+        //Adding numberofblocks of  sub-list in segment Example if data in bit is 40 den number of block  = 5 so 5 sub-list to be created.
         ArrayList<Integer>[] segment = new ArrayList[numberofblocks];
         
         //Displaying the data before ading the codeword
@@ -139,7 +138,7 @@ public class checksum_detection {
         // for ( i = 0; i < numberofblocks; i++){
             //     System.out.print("Segment["+ (i + 1) +"]: "+segment[i]+"\n");    
             // }
-        System.out.print("\nSegments before code generation:");
+        System.out.print("\nSegments before retreving actual data:");
         for ( i =0; i < code.size(); i++){
             if (i == bs) {
                 System.out.print("\nSegment["+j+"]\t");
@@ -223,30 +222,50 @@ public class checksum_detection {
             // j helps in numbering the segments.
             j =1;
             // Displaying the 4 segment discarding the 5th segment.
+            System.out.println("\nSegmenst after retrieving actual data");
             for ( i =0; i < numberofblocks - 1 ; i++){
                 System.out.println("Segment["+j+"]: "+segment[i].toString().replaceAll("[\\[\\],]",""));
                 j++;
             }
 
             //Final code after discarding the last segment.
-            System.out.println("\nFinal Data: " + code.toString().replaceAll("[\\[\\],]",""));
+            System.out.println("\nActual Data: " + code.toString().replaceAll("[\\[\\],]",""));
         }
         else{
             //Displaying error message and to retransmit the data again.
-            System.out.println("\n\u001B[31mError Detected....\nPlease Retransmit The Data Again. \u001B[39m");
+            System.out.println("\n\n\u001B[31mError Detected....\nPlease Retransmit The Data Again. \u001B[39m");
         }
 
     }
 }
 
 /*
+
 => Example1:- (No error)
-Entered data is:  1011001110101011010110101101010101110000
+// data(For reference) => 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
+
+Enter the size of the data: 40
+
+Enter the data:
+1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
+
+Entered data is:
+1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
+
 Number of blocks:  5
+
 Bits in a block:  8
+
+Segmenst before retrieving actual data:
+Segment[1]      1 0 1 1 0 0 1 1
+Segment[2]      1 0 1 0 1 0 1 1
+Segment[3]      0 1 0 1 1 0 1 0
+Segment[4]      1 1 0 1 0 1 0 1
+Segment[5]      0 1 1 1 0 0 0 0
 
 No Error Detected....
 
+Segmenst after retrieving actual data
 Segment[1]: 1 0 1 1 0 0 1 1
 Segment[2]: 1 0 1 0 1 0 1 1
 Segment[3]: 0 1 0 1 1 0 1 0
@@ -256,10 +275,24 @@ Final Data: 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1
 
 
 => Example2:- (Error)
+Enter the size of the data: 40
 
-Entered data is:  1011001110101011010110101101010101110001
+Enter the data:
+1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 1
+
+Entered data is:
+1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 1 
+
 Number of blocks:  5
+
 Bits in a block:  8
+
+Segments before retreving actual data:
+Segment[1]      1 0 1 1 0 0 1 1
+Segment[2]      1 0 1 0 1 0 1 1
+Segment[3]      0 1 0 1 1 0 1 0
+Segment[4]      1 1 0 1 0 1 0 1 
+Segment[5]      0 1 1 1 0 0 0 1
 
 Error Detected....
 Please Retransmit The Data Again.

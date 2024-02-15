@@ -108,7 +108,7 @@ public class checksum {
         }
 
         //Displaying Number of blocks in the segment.
-        System.out.println("\nNumber of blocks:  " + numberofblocks);
+        System.out.println("\n\nNumber of blocks:  " + numberofblocks);
 
         //Displaying the number of bits in each block respectively.
         System.out.println("\nBits in a block:  "+ blocksize);
@@ -137,9 +137,6 @@ public class checksum {
 
         j = 1;
         //Displaying segments before code generation.
-        // for ( i = 0; i < numberofblocks; i++){
-            //     System.out.print("Segment["+ (i + 1) +"]: "+segment[i]+"\n");    
-            // }
         System.out.print("\nSegments before code generation:");
         for ( i =0; i < code.size(); i++){
             if (i == bs) {
@@ -217,6 +214,7 @@ public class checksum {
         
         // Helps in numbering the segments.
         j = 1;
+        // Initializing bs = 0 for iteration and numerinng purpose.
         bs = 0;
         //Displaying the Segments.
         System.out.print("\n\nSegments after code generation:");
@@ -235,18 +233,35 @@ public class checksum {
 }
 
 /*
+
+data = 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1
+
 => Example:-
 
-Entered data is:  10110011101010110101101011010101
+Enter the size of the data: 32
+
+Enter the data:
+1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1
+
+Entered data is:
+1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1
+
 Number of blocks:  4
+
 Bits in a block:  8
 
-Segment[1]      10110011
-Segment[2]      10101011
-Segment[3]      01011010
-Segment[4]      11010101
-Segment[5]      01110000
+Segments before code generation:
+Segment[1]      1 0 1 1 0 0 1 1
+Segment[2]      1 0 1 0 1 0 1 1 
+Segment[3]      0 1 0 1 1 0 1 0
+Segment[4]      1 1 0 1 0 1 0 1
+
+Segments after code generation:
+Segment[1]      1 0 1 1 0 0 1 1
+Segment[2]      1 0 1 0 1 0 1 1 
+Segment[3]      0 1 0 1 1 0 1 0
+Segment[4]      1 1 0 1 0 1 0 1
+Segment[5]      0 1 1 1 0 0 0 0
 
 Codeword: 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
-
  */

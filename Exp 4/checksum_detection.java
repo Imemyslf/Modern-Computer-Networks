@@ -44,11 +44,12 @@ public class checksum_detection {
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         
-        checksum_detection cs = new checksum_detection();
-        int ptr = 0,numberofblocks = 5,blocksize = 8,i,j;
-        int[] data = {1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0};
+        checksum_detection cs = new checksum_detection();        
+        Scanner s = new Scanner(System.in);
+        int i,j,sum,ptr = 0,numberofblocks,blocksize,bs = 0;
+        // int[] data = {1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0};
 
-        ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 5 sub-list in segment.
+        // ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 5 sub-list in segment.
         ArrayList<Integer> remainder1 = new ArrayList<>();  //To keep the main remainder for calculations.
         ArrayList<Integer> remainder2 = new ArrayList<>(); // Temporary remainder for calculations.
         ArrayList<Integer> newsegment1 = new ArrayList<>(); // Toggle arounds segments.
@@ -56,24 +57,69 @@ public class checksum_detection {
         ArrayList<Integer> buffer = new ArrayList<>();  // buffer array storing 0 0 0 0 0 0 0 0 1 to add to remainder if carry == 1 at the end.
         ArrayList<Integer> code = new ArrayList<>(); // Storing the actual codeword.
 
+        //Taking user input for size of the data
+        System.out.print("\nEnter the size of the data: ");
+        int sizeofdata = s.nextInt();
+
+        // Declaring and initializing variable data to the length of the size of the data entered by the user.
+        int data[] = new int[sizeofdata];
+        
+        // taking input from the user about the data
+        System.out.println("\nEnter the data: ");
+        for (i = 0 ; i < sizeofdata; i++){
+            int k = s.nextInt();
+            data[i] = k;
+        }
+
+        // Declaring sum = sizeofdata for future opreations.
+        sum = sizeofdata;
+
+        // Finding the numbers of blocks and block size.
+        for (i = 1; i < sizeofdata; i++)
+        {
+            if (sizeofdata % i == 0)
+            {
+                j = sizeofdata / i;
+                if (sum > i + j)
+                {
+                    sum = i + j;
+                    code.clear();
+                    code.add(i);
+                    code.add(j);
+                }
+            }
+        }
+
+        //Initializing the number of blocks.
+        numberofblocks = code.get(0);
+        // Initializing the block size.
+        blocksize = code.get(1);
+        // Clearing the code list for not having any garbaze value where in future we add the actual code.
+        code.clear();
+
+        //Adding numberofblocks of  sub-list in segment Example if data in bit is 32 den number of block  = 4 so 4 sub-list to be created.
+        ArrayList<Integer>[] segment = new ArrayList[numberofblocks];
+        
+        //Displaying the data before ading the codeword
+        System.out.print("\nEntered data is:\n");
+        for (i = 0 ; i < sizeofdata; i++){
+            System.out.print(data[i]+" ");
+        }
+
+        //Displaying Number of blocks in the segment.
+        System.out.println("\n\nNumber of blocks:  " + numberofblocks);
+
+        //Displaying the number of bits in each block respectively.
+        System.out.println("\nBits in a block:  "+ blocksize);
+
+
         // Initializing buffer list.
         buffer.add(1);
         for ( i = 0; i < blocksize - 1; i++) {
             buffer.add(0);
         }
 
-        //Displaying the data before ading the codeword
-        System.out.print("\nEntered data is:  ");
-        for (i = 0 ; i < data.length; i++){
-            System.out.print(data[i]+" ");
-        }
         
-        //Displaying number of blocks in the segment.
-        System.out.println("\nNumber of blocks:  " + numberofblocks);
-
-        //Displaying the number of bits in each block respectively.
-        System.out.println("Bits in a block:  "+ blocksize);
-
         //initializing segment list into 5 sub-list of segment.
         for ( i = 0; i < numberofblocks; i++) {
             segment[i] = new ArrayList<Integer>();
@@ -84,9 +130,24 @@ public class checksum_detection {
             for ( j = ptr; j < ptr + blocksize; j++) {
                 segment[i].add(data[j]);
             }
+            code.addAll(segment[i]);
             ptr += blocksize;
         }
 
+        j = 1;
+        //Displaying segments before code generation.
+        // for ( i = 0; i < numberofblocks; i++){
+            //     System.out.print("Segment["+ (i + 1) +"]: "+segment[i]+"\n");    
+            // }
+        System.out.print("\nSegments before code generation:");
+        for ( i =0; i < code.size(); i++){
+            if (i == bs) {
+                System.out.print("\nSegment["+j+"]\t");
+                bs = bs + 8 ;
+                j++;
+            }
+            System.out.print(code.get(i)+" ");    
+        }
         //Initialize the newsegment1 & newsegment2 first segment and second segment respectively
         newsegment1 = new ArrayList<Integer>(segment[0]);
         newsegment2 = new ArrayList<Integer>(segment[1]);
@@ -152,8 +213,9 @@ public class checksum_detection {
         // If remainder1 = 0 then display no error and proceed to discard the last segment from segment list.
         // Else display error and ask to retransmit the data again.
         if (remainder1.equals(buffer)){
-            System.out.println("\n\u001B[32mNo Error Detected....\u001B[39m\n");
+            System.out.println("\n\n\u001B[32mNo Error Detected....\u001B[39m\n");
 
+            code.clear();
             for (i = 0; i < numberofblocks -1 ; i++){
                 code.addAll(segment[i]);
             }

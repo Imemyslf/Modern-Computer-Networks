@@ -73,7 +73,7 @@ public class checksum_detection {
         // Declaring sum = sizeofdata for future opreations.
         sum = sizeofdata;
 
-        // Finding the numbers of blocks and block size.
+        // Finding the numbers of blocks and block size. only applicable for even numbers.
         for (i = 1; i < sizeofdata; i++)
         {
             if (sizeofdata % i == 0)
@@ -135,9 +135,6 @@ public class checksum_detection {
 
         j = 1;
         //Displaying segments before code generation.
-        // for ( i = 0; i < numberofblocks; i++){
-            //     System.out.print("Segment["+ (i + 1) +"]: "+segment[i]+"\n");    
-            // }
         System.out.print("\nSegments before retreving actual data:");
         for ( i =0; i < code.size(); i++){
             if (i == bs) {

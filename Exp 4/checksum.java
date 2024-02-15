@@ -75,7 +75,7 @@ public class checksum {
         // Declaring sum = sizeofdata for future opreations.
         sum = sizeofdata;
 
-        // Finding the numbers of blocks and block size.
+        // Finding the numbers of blocks and block size.Only applicable for even numbers.
         for (i = 1; i < sizeofdata; i++)
         {
             if (sizeofdata % i == 0)

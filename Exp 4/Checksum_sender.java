@@ -229,12 +229,15 @@ public class Checksum_sender {
         
         //Displaying the Codeword as String.
         System.out.println("\n\nCodeword: " + code.toString().replaceAll("[\\[\\],]","")+"\n");
+        s.close();
     }
 }
 
 /*
 
 data = 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1
+
+data 2 = 1 0 1 0 1 0 0 1 0 0 1 1 1 0 0 1 1 0 1 1 0 0 1 0 1 0 1 0 1 1 0 1
 
 => Example:-
 

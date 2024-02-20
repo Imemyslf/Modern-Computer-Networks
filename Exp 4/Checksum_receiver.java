@@ -50,7 +50,6 @@ public class Checksum_receiver {
 
         // ArrayList<Integer>[] segment = new ArrayList[numberofblocks];//Adding 5 sub-list in segment.
         ArrayList<Integer> remainder1 = new ArrayList<>();  //To keep the main remainder for calculations.
-        ArrayList<Integer> remainder2 = new ArrayList<>(); // Temporary remainder for calculations.
         ArrayList<Integer> newsegment1 = new ArrayList<>(); // Toggle arounds segments.
         ArrayList<Integer> newsegment2 = new ArrayList<>(); // Toggle arounds segments.
         ArrayList<Integer> buffer = new ArrayList<>();  // buffer array storing 0 0 0 0 0 0 0 0 1 to add to remainder if carry == 1 at the end.
@@ -169,13 +168,13 @@ public class Checksum_receiver {
                     Collections.reverse(remainder1);
 
                     //Clearing the temporary reaminder for no garbez data in it.
-                    remainder2 = new ArrayList<>();
+                    newsegment1 = new ArrayList<>();
 
                     //Initializing carry = 0 since we are gonna calculate from start.
                     cs.carry = 0;
 
                     //Calling remain function and assigning the value to remainder1.
-                    remainder1 = cs.remain(remainder1,buffer,remainder2,blocksize);
+                    remainder1 = cs.remain(remainder1,buffer,newsegment1,blocksize);
 
                 }
                 
@@ -240,7 +239,7 @@ public class Checksum_receiver {
 
 => Example1:- (No error)
 // data(For reference) => 1 0 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0
-
+// data(For reference) => 1 1 0 0 1 1 0 0 1 0 1 0 1 0 1 0 1 1 1 1 0 0 0 0 1 1 0 0 0 0 1 1 1 1 0 1 0 0 1 1
 Enter the size of the data: 40
 
 Enter the data:

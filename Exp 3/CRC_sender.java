@@ -132,11 +132,10 @@ class CRC_sender
         }
         
         // Displaying Codeword,Quotient, Remainder,and CRC code.. 
-        System.out.println("| Codeword:  | "+ dividend.toString().replaceAll("[\\[\\],]","")+"\t |");
-        System.out.println("| Quotient:  | "+ quotient.toString().replaceAll("[\\[\\],]","")+"\t\t |");
-        System.out.println("| Remainder: | "+ remainder.toString().replaceAll("[\\[\\],]","")+"\t\t\t |");
-        System.out.println("| CRC code:  | "+ crccode.toString().replaceAll("[\\[\\],]","")+"\t\t\t |");
-        System.out.println(" ----------------------------------------");
+        System.out.println(" Codeword\t: "+ dividend.toString().replaceAll("[\\[\\],]","")+"\t ");
+        System.out.println(" Quotient\t: "+ quotient.toString().replaceAll("[\\[\\],]","")+"\t\t ");
+        System.out.println(" Remainder\t: "+ remainder.toString().replaceAll("[\\[\\],]","")+"\t\t\t ");
+        System.out.println(" CRC code\t: "+ crccode.toString().replaceAll("[\\[\\],]","")+"\t\t\t ");
         System.out.println("\n");
     }
    
@@ -149,15 +148,15 @@ class CRC_sender
         int i;
         
         // Intialize the size of dividend.
-        System.out.print("\n Enter the size of dividend:\t");
+        System.out.print("\n Enter the size of data:\t");
         int sizeofdividend = scanner.nextInt();
 
         //  Initialize the size of divisor.
-        System.out.print("\n Enter the size of divisor:\t");
+        System.out.print("\n Enter the size of goX:\t");
         int sizeofdivisor = scanner.nextInt();
         
         // Initial the dividend list.
-        System.out.print("\n Enter the dividend:\t");
+        System.out.print("\n Enter the data: ");
         for ( i = 0; i < sizeofdividend; i++)
         {            
             int s1 = scanner.nextInt();
@@ -165,7 +164,7 @@ class CRC_sender
         }
         
         // Initialize the divisor list.
-        System.out.print("\n Enter the divisor:\t");
+        System.out.print("\n Enter the goX:\t");
         for ( i = 0; i < sizeofdivisor; i++)
         {            
             int s2 = scanner.nextInt();
@@ -180,9 +179,8 @@ class CRC_sender
         
         //Display dividend and divisor.
         System.out.println("\n");
-        System.out.println(" ----------------------------------------");
-        System.out.println("| Dividend:  | "+ k.dividend.toString().replaceAll("[\\[\\],]","")+"\t |");
-        System.out.println("| Divisor:   | "+ k.divisor.toString().replaceAll("[\\[\\],]","")+"\t\t\t |");
+        System.out.println(" Data\t\t: "+ k.dividend.toString().replaceAll("[\\[\\],]","")+"\t ");
+        System.out.println(" goX\t\t: "+ k.divisor.toString().replaceAll("[\\[\\],]","")+"\t\t\t ");
         
         // Calling CRC_codegenerator() function.
         k.CRC_codegenerator(sizeofdividend,sizeofdivisor);
@@ -193,24 +191,21 @@ class CRC_sender
 /*
 => Example:- 
 
+ Enter the size of data: 8
 
- Enter the size of dividend:    8
+ Enter the size of goX: 4
 
- Enter the size of divisor:     4
+ Enter the data: 1 0 0 1 1 1 0 1
 
- Enter the dividend:    1 0 0 1 1 1 0 1
-
- Enter the divisor:    1 0 0 1
+ Enter the goX: 1 0 0 1
 
 
- ----------------------------------------
-| Dividend:  | 1 0 0 1 1 1 0 1 0 0 0     |
-| Divisor:   | 1 0 0 1                   |
-| Codeword:  | 1 0 0 1 1 1 0 1 1 0 0     |
-| Quotient:  | 1 0 0 0 1 1 0 0           |
-| Remainder: | 0 1 0 0                   |
-| CRC code:  | 1 0 0                     |
- ----------------------------------------
+ Data           : 1 0 0 1 1 1 0 1 0 0 0
+ goX            : 1 0 0 1                        
+ Codeword       : 1 0 0 1 1 1 0 1 1 0 0
+ Quotient       : 1 0 0 0 1 1 0 0
+ Remainder      : 0 1 0 0
+ CRC code       : 1 0 0
 
 
  */
